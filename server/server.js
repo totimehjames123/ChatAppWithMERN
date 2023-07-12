@@ -5,7 +5,7 @@ const multer = require('multer');
 const collection = require("./mongo");
 const login = require("./login");
 const path = require('path');
-// const chatsCollection = require("./chats");
+const chatsCollection = require("./chats"); 
 const app = express();
 
 app.use(express.json());
@@ -53,11 +53,11 @@ app.post('/login', async (req, res) => {
 app.post("/signup", upload.single('profilePicture'), async (req, res) => {
   const { username, email, gender, selectedCountry, password } = req.body;
   const profilePicture = req.file;
-   
+   console.log(username)
   const data = {
     username: username,
     email: email,
-    profilePicture: profilePicture ? profilePicture.filename : null, // Use the filename if the file was uploaded, otherwise set it to null
+    profilePicture: profilePicture ? profilePicture.filename : null, 
     gender: gender,
     country: selectedCountry,
     password: password,
@@ -89,11 +89,34 @@ app.get("/users", async (req, res) => {
  
 })
 
+//send text message
+app.post("/sendmessage", async (req, res) => {
+  try{
+    const { message } = req.body;
+    if (!message || message.trim() === '') {
+      return res.status(400).json({ error: "Message can't be empty" });
+    }
+        
+    console.log(message)
+
+    await chatsCollection.insertMany({
+      message: message,
+    });
+
+    res.status(200).json({ status: 200, message: "Message sent" });
+  }
+  catch (err) {
+    console.log(" an error occurred")
+  }
+  
+})
+
 //Fetch chats
-app.get("/chats", async (req, res) => {
+app.post("/chats", async (req, res) => {
   try{
     const chats = await chatsCollection.find({});
     res.send({status: 'ok', data: chats});
+
   }
   catch(err){
     console.log("error fetching chats");

@@ -111,7 +111,7 @@ function SignupPage() {
                                                       const formData = new FormData();
                                                       formData.append('username', username);
                                                       formData.append('email', email);
-                                                      formData.append('profilePicture', profilePicture); // Append the profilePicture file to the formData
+                                                      formData.append('profilePicture', profilePicture); 
                                                       formData.append('gender', gender);
                                                       formData.append('selectedCountry', selectedCountry);
                                                       formData.append('password', password);
