@@ -1,0 +1,61 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@keyframes typing {
+    from {
+      width: 0;
+    }
+    to {
+      width: 100%;
+    }
+  }
+
+  /* Removing bar on all scrollbars */
+  *{
+    scrollbar-width: none;
+  }  
+
+  *::-webkit-scrollbar {
+    display: none;
+  }
+
+  /* typing animation */
+  .typing-text {
+    overflow: hidden;
+    white-space: nowrap;
+    animation: typing 3s steps(30, end);
+    font-size: 30px;
+    font-weight: 300;
+    
+  }
+  
+    
+  .signup-container > div::-webkit-scrollbar{
+    display: none;
+  }
+
+  /* Side bar container */
+  .side-bar-container {
+    width: 30%;
+    height: 90vh;
+    float: left;
+
+  }
+
+  /* Main content */
+  .main-content {
+    float: left;
+    width: 70%;
+    height: 90vh;
+  }
+
+  .main-content .chat-container {
+    height: 70vh;
+  }
+
+  /* Active Links */
+  .active{
+    color: white;
+  }
+  
