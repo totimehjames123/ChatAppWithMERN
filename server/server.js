@@ -132,22 +132,47 @@ app.post("/sendmessage", async (req, res) => {
   
 })
 
-app.post("/store", async (req, res) => {
+var senderEmail_ = "";
+var recipientEmail_ = "";
+
+app.get("/store", async (req, res) => {
+  senderEmail = req.query.senderEmail
+  recipientEmail = req.query.recipientEmail
   
+  if (req.session.senderEmail === null || req.session.recipientEmail === ""){
+    res.send('Data note the session.');
+  }else{
+    req.session.senderEmail = senderEmail
+    req.session.recipientEmail = recipientEmail
+
+    senderEmail_ = senderEmail
+    recipientEmail_ = recipientEmail
+
+    
+
+  }
+  
+
+
 })
 
-app.post("/selectmessages", async (req, res) => {
-  const recipientEmail = req.body.recipientEmail;
-  const senderEmail = req.body.senderEmail;
+app.get('/retrieve', (req, res) => {
+  const value = req.session.senderEmail + " " + req.session.recipientEmail;
+  res.send(`Retrieved value from session: ${value}`);
+});
 
-  console.log(recipientEmail, senderEmail)
+app.get("/selectmessages", async (req, res) => {
+  recipientEmail = req.session.recipientEmail;
+  senderEmail = req.session.senderEmail;
+
+  // console.log(senderEmail_, recipientEmail_)
+
   try {
-    
     const messages = await chatsCollection.find({
-      recipientEmail: recipientEmail,
-      senderEmail: senderEmail
+      recipientEmail: recipientEmail_,
+      senderEmail: senderEmail_
     });
-    // console.log(messages)
+    // console.log(messages) 
 
     res.send({ status: 'ok', data: messages });
   } catch (err) {

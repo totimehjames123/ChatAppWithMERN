@@ -8,10 +8,25 @@ function ChatPage() {
 
   const senderEmail = sessionStorage.getItem('senderEmail')
   const recipientEmail = sessionStorage.getItem('recipientEmail')
-
-  useEffect(() => {
-    setMessages(JSON.parse(sessionStorage.getItem("selectedMessages")))
-  }, [])
+  
+  const longPollingRequest = useCallback(() => {
+      fetch("http://localhost:5000/selectmessages")
+        .then((response) => response.json())
+        .then((data) => {
+          if (data.data) {
+            setMessages(data.data);
+          }
+          longPollingRequest(); 
+        })
+        .catch((error) => {
+          // console.error('Error in long polling request:', error);
+          longPollingRequest(); 
+        });
+    }, []);
+  
+    useEffect(() => {
+      longPollingRequest(); 
+    }, [longPollingRequest]);
     
   // const message = [
   //   { id: 1, profilePicture: 'logo.jpeg', name: 'Sender Name', time: '10:30 AM', message: 'Hello, will you be going to school today!', isSender: isSender },

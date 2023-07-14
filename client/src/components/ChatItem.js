@@ -3,27 +3,19 @@ import axios from 'axios';
 
 const ChatItem = ({ email, username, profilePicture, message, time }) => {
 
-  const [senderEmail, setSenderEmail] = useState(sessionStorage.getItem("recipientEmail"))
-  const [recipientEmail, setRecipientEmail] = useState(sessionStorage.getItem("recipientEmail"))
-
   async function selectChatItem () {
     try{
       sessionStorage.setItem("recipientEmail", email);
       sessionStorage.setItem("recipientUsername", username);
       sessionStorage.setItem("recipientProfilePicture", profilePicture);
+
+      const senderEmail = sessionStorage.getItem('senderEmail')
+      const recipientEmail = sessionStorage.getItem('recipientEmail')
+
+      const url = `http://localhost:5000/store?senderEmail=${senderEmail}&recipientEmail=${recipientEmail}`;
        
-      const response = await axios.post('http://localhost:5000/selectmessages', {
-        senderEmail: sessionStorage.getItem('senderEmail'),
-        recipientEmail: sessionStorage.getItem('recipientEmail'),
-      })
+      const response = await axios.get(url)
       
-      if (response.data.status == "ok"){
-        sessionStorage.setItem("selectedMessages", JSON.stringify(response.data.data))
-        
-      }
-      else{
-        alert("failed to select data")
-      }
     }
     catch(e){
       alert(e,"nothing")
