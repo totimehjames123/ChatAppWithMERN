@@ -6,23 +6,28 @@ import axios from 'axios';
 function InputField() {
 
   const [message, setMessage] = useState('');
+   
 
   async function sendTextMessage(e){
     e.preventDefault();
     if (message.trim() === '') {
-      alert ("can't be empty")
+      alert(sessionStorage.getItem('senderEmail'), " enter something!");
     }
     else {
       try{
         const response = await axios.post('http://localhost:5000/sendmessage', {
+          senderEmail: sessionStorage.getItem('senderEmail'),
+          recipientEmail: sessionStorage.getItem('recipientEmail'),
+          senderUsername: sessionStorage.getItem('senderUsername'),
+          recipientUsername: sessionStorage.getItem('recipientUsername'),
+          senderProfilePicture: sessionStorage.getItem('senderProfilePicture'),
+          recipientProfilePicture: sessionStorage.getItem('recipientProfilePicture'),
           message, 
         })
         if (response.data.status === 200){
-          alert("message sent")
+          alert("Message sent successfully!")
         }
         
-        
-
       }
       catch(err){
         alert(err)

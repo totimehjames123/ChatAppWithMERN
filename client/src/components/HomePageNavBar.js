@@ -7,9 +7,7 @@ function HomePageNavBar() {
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
   };
-
-
-
+  
   return (
     <>
     <nav className="flex sticky top-0 items-center justify-between flex-wrap bg-white p-6">

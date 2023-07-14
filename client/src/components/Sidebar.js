@@ -53,8 +53,10 @@ function Sidebar() {
                         return (
                           <>
                               <ChatItem
-                                name={user.username}
-                                profilePicture= {"http://localhost:5000/uploads/" + user.profilePicture}
+                                key={user._id}
+                                email = {user.email}
+                                username={user.username}
+                                profilePicture= {user.profilePicture}
                                 message="What's up?"
                                 time = "12:34am"
                               />

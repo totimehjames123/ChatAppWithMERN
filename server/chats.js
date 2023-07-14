@@ -7,32 +7,32 @@ mongoose.connect("mongodb://127.0.0.1:27017/socialmedia")
 })
 
 const newSchema = new mongoose.Schema({
-    email: {
+    senderEmail: {
         type: String,
-        required: true,
-    },
-    senderId: {
-        type: String,
-        required: true,
-    },
-    recipientId: {
-        type: String,
-        required: true,
+        // required: true,
     },
     recipientEmail: {
         type: String,
-        required: true,
+        // required: true,
     },
-    username: {
+    senderUsername: {
         type: String,
-        required: true,
+        // required: true,
     },
-    profilePicture: {
+    recipientUsername: {
         type: String,
-        required: true,
+        // required: true,
     },
-    chatDateTime: {
-       type: String,
+    senderProfilePicture: {
+        type: String,
+        // required: true,
+    },
+    recipientProfilePicture: {
+        type: String,
+        // required: true,
+    },
+    chatDate: {
+       type: Date,
     },
     message: {
         type: String,

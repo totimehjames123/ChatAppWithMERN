@@ -1,4 +1,5 @@
 const express = require("express");
+const session = require("express-session");
 const cors = require("cors");
 const multer = require('multer');
 
@@ -13,6 +14,15 @@ app.use(express.urlencoded({ extended: true }));
 app.use(cors());
 
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
+
+app.use(
+  session({
+    secret: 'your-secret-key',
+    resave: false,
+    saveUninitialized: true,
+    // cookie: { secure: false }, // Adjust options as needed
+  })
+);
 
 // Configure multer for file upload
 const storage = multer.diskStorage({
@@ -34,13 +44,14 @@ const upload = multer({ storage });
 // Login
 app.post('/login', async (req, res) => {
   const { email, password } = req.body;
-  console.log(email, password);
-
+ 
   const checkCredentials = await collection.findOne({ email: email, password: password });
 
   try {
     if (checkCredentials) {
-      res.json("exist");
+      const user = await collection.findOne({email: email, password: password});
+      res.send({status: 'ok', data: user})
+
     } else {
       res.json("notexist");
     }
@@ -80,6 +91,7 @@ app.post("/signup", upload.single('profilePicture'), async (req, res) => {
 //Fetching users
 app.get("/users", async (req, res) => {
   try{
+    
     const users = await collection.find({});
     res.send({status: 'ok', data: users})
   }
@@ -92,39 +104,58 @@ app.get("/users", async (req, res) => {
 //send text message
 app.post("/sendmessage", async (req, res) => {
   try{
-    const { message } = req.body;
+    const {senderEmail, recipientEmail, senderUsername, recipientUsername, senderProfilePicture, recipientProfilePicture, message } = req.body;
     if (!message || message.trim() === '') {
       return res.status(400).json({ error: "Message can't be empty" });
-    }
-        
-    console.log(message)
 
+    }
+    
     await chatsCollection.insertMany({
+      senderEmail: senderEmail,
+      recipientEmail: recipientEmail,
+      senderUsername: senderUsername,
+      recipientUsername: recipientUsername,
+      senderProfilePicture: senderProfilePicture,
+      recipientProfilePicture: recipientProfilePicture,
       message: message,
     });
 
+    
+
     res.status(200).json({ status: 200, message: "Message sent" });
+
   }
+
   catch (err) {
-    console.log(" an error occurred")
+    console.log(err," an error occurred")
   }
   
 })
 
-//Fetch chats
-app.post("/chats", async (req, res) => {
-  try{
-    const chats = await chatsCollection.find({});
-    res.send({status: 'ok', data: chats});
-
-  }
-  catch(err){
-    console.log("error fetching chats");
-  }
+app.post("/store", async (req, res) => {
+  
 })
 
+app.post("/selectmessages", async (req, res) => {
+  const recipientEmail = req.body.recipientEmail;
+  const senderEmail = req.body.senderEmail;
+
+  console.log(recipientEmail, senderEmail)
+  try {
+    
+    const messages = await chatsCollection.find({
+      recipientEmail: recipientEmail,
+      senderEmail: senderEmail
+    });
+    // console.log(messages)
+
+    res.send({ status: 'ok', data: messages });
+  } catch (err) {
+    console.log("error fetching chats:", err);
+    res.status(500).send({ status: 'error', message: 'Error fetching chats' });
+  }
+});
 
 app.listen(5000, () => {
   console.log("app is listening on the port 5000");
 });
-

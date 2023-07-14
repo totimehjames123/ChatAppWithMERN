@@ -1,15 +1,23 @@
-import React from 'react'
+import React, {useState, useCallback, useEffect} from 'react'
 import './../index.css'
 import ChatMessage from '../components/ChatMessage';
 import InputField from '../components/InputField';
 
 function ChatPage() {
+  const [messages, setMessages] = useState([])
 
-  const messages = [
-    { id: 1, profilePicture: 'logo.jpeg', name: 'Sender Name', time: '10:30 AM', message: 'Hello, will you be going to school today!', isSender: true },
-    { id: 2, profilePicture: 'logo.png', name: 'Recipient Name', time: '10:32 AM', message: 'Hi, yes i will be going ... I\'ll be coming along with my laptop!', isSender: false },
-    // Add more messages as needed
-  ];
+  const senderEmail = sessionStorage.getItem('senderEmail')
+  const recipientEmail = sessionStorage.getItem('recipientEmail')
+
+  useEffect(() => {
+    setMessages(JSON.parse(sessionStorage.getItem("selectedMessages")))
+  }, [])
+    
+  // const message = [
+  //   { id: 1, profilePicture: 'logo.jpeg', name: 'Sender Name', time: '10:30 AM', message: 'Hello, will you be going to school today!', isSender: isSender },
+  //   { id: 2, profilePicture: 'logo.png', name: 'Recipient Name', time: '10:32 AM', message: 'Hi, yes i will be going ... I\'ll be coming along with my laptop!', isSender: isSender },
+  //   // Add more messages as needed
+  // ];
 
   return (
     <>
@@ -19,11 +27,14 @@ function ChatPage() {
             {messages.map((msg) => (
                 <ChatMessage
                   key={msg.id}
+                  username = {msg.username}
+                  email ={msg.email}
                   profilePicture={msg.profilePicture}
                   time={msg.time}
                   message={msg.message}
-                  isSender={msg.isSender}
-                />
+                  isSender={true}
+                /> 
+               
             ))}
         </div>
       </div>
@@ -33,7 +44,6 @@ function ChatPage() {
     </div>
     </>
     
-
   )
 }
 

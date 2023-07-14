@@ -7,6 +7,8 @@ function LoginPage() {
 
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+
+    const [userInfo, setUserInfo] = useState([]);
     
     async function submit(e){
         e.preventDefault()
@@ -15,9 +17,16 @@ function LoginPage() {
             await axios.post('http://localhost:5000/login', {
                 email, password
             }).then (res => {
-                if (res.data === "exist"){
-                    alert("go to home")
-                    location("/home", {state: {id: email}})
+                if (res.data.status === "ok"){
+                    
+                    console.log(res.data.data)
+                    
+                    sessionStorage.setItem("senderEmail", email);
+                    sessionStorage.setItem("senderUsername", res.data.data.username);
+                    sessionStorage.setItem("senderProfilePicture", res.data.data.profilePicture)
+                    sessionStorage.setItem("senderGender", res.data.data.gender)
+                    
+                    location("/mainpage")
                 }
                 else if (res.data === "notexist"){
                     alert("doesn't exist")
@@ -30,8 +39,6 @@ function LoginPage() {
         catch{
             console.log("Getting an error")
         }
-        
-        
   }
  
   return (
