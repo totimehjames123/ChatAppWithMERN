@@ -1,4 +1,4 @@
-import React, {useEffect, useState, useCallback} from 'react'
+import React, { useState } from 'react'
 import './../index.css'
 import './../App.css'
 import ChatItem from './ChatItem'
@@ -6,30 +6,15 @@ import ChatItem from './ChatItem'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSearch } from '@fortawesome/free-solid-svg-icons';
 
+function Sidebar({users, onSelectedUser}) {
+  const [userEmail, setUserEmail] = useState('');
 
-function Sidebar() {
+  const handleUserSelection = (email) => {
+    setUserEmail(email)
+    onSelectedUser(email)    
+  }
 
-    const [users, setUsers] = useState([])
-    
-    const longPollingRequest = useCallback(() => {
-        fetch("http://localhost:5000/users")
-          .then((response) => response.json())
-          .then((data) => {
-            if (data.data) {
-              setUsers(data.data);
-            }
-            longPollingRequest(); 
-          })
-          .catch((error) => {
-            console.error('Error in long polling request:', error);
-            longPollingRequest(); 
-          });
-      }, []);
-    
-      useEffect(() => {
-        longPollingRequest(); 
-      }, [longPollingRequest]);
-      
+ 
   return (
     <div className='relative side-bar-container bg-gray-100'>
 
@@ -51,16 +36,16 @@ function Sidebar() {
                 <div className='overflow-x-hidden' >
                     {users.map(user => {
                         return (
-                          <>
+                          <div onClick={handleUserSelection.bind(null, user.email)}>
                               <ChatItem
                                 key={user._id}
                                 email = {user.email}
                                 username={user.username}
                                 profilePicture= {user.profilePicture}
-                                message="What's up?"
+                                message= {userEmail}
                                 time = "12:34am"
                               />
-                          </>
+                          </div>
                         )
                     })}
                    
