@@ -3,7 +3,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPaperPlane, faSmile, faMicrophone } from '@fortawesome/free-solid-svg-icons';
 import axios from 'axios';
 
-function InputField() {
+function InputField({senderId, recipientId}) {
 
   const [message, setMessage] = useState('');
    
@@ -11,19 +11,20 @@ function InputField() {
   async function sendTextMessage(e){
     e.preventDefault();
     if (message.trim() === '') {
-      alert(sessionStorage.getItem('senderEmail'), " enter something!");
+      alert (senderId + " " + recipientId)
     }
     else {
       try{
         const response = await axios.post('http://localhost:5000/sendmessage', {
-          senderEmail: sessionStorage.getItem('senderEmail'),
-          recipientEmail: sessionStorage.getItem('recipientEmail'),
+          senderEmail: senderId,
+          recipientEmail: recipientId,
           senderUsername: sessionStorage.getItem('senderUsername'),
           recipientUsername: sessionStorage.getItem('recipientUsername'),
           senderProfilePicture: sessionStorage.getItem('senderProfilePicture'),
           recipientProfilePicture: sessionStorage.getItem('recipientProfilePicture'),
           message, 
         })
+
         if (response.data.status === 200){
           alert("Message sent successfully!")
         }
@@ -48,10 +49,10 @@ function InputField() {
           className="flex-grow outline-none focus:outline-none"
           onChange={(e) => setMessage(e.target.value)}
         />
-        <button className="mx-2" style={{visibility: message.trim() !== '' ? 'hidden' : 'visible'}}>
+        <button className="mx-2" style={{visibility: message.trim(senderId) !== '' ? 'hidden' : 'visible'}}>
           <FontAwesomeIcon icon={faMicrophone} className="text-green-500" />
         </button>
-        <button className="ml-2" onClick={sendTextMessage}>
+        <button className="ml-2" onClick={sendTextMessage.bind()}>
           <FontAwesomeIcon icon={faPaperPlane} className="text-purple-500" />
         </button>
       </div>

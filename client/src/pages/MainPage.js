@@ -74,7 +74,7 @@ function MainPage() {
     <h1>{location.state.id}</h1>
       <ChatPageNavBar users = {users}/>
       <Sidebar users={users} onSelectedUser={handleEmailUpdate}/>
-      <ChatPage users={users} messages={messages} senderId={location.state.id}/>
+      <ChatPage users={users} messages={messages} senderId={location.state.id} recipientId={selectedEmail}/>
     </div>
   )
 }

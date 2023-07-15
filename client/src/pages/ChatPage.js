@@ -3,7 +3,7 @@ import './../index.css'
 import ChatMessage from '../components/ChatMessage';
 import InputField from '../components/InputField';
 
-function ChatPage({users, messages, senderId}) {
+function ChatPage({users, messages, senderId, recipientId}) {
 
   return (
     <>
@@ -25,7 +25,7 @@ function ChatPage({users, messages, senderId}) {
         </div>
       </div>
       <div className='p-5'>
-        <InputField />
+        <InputField senderId={senderId} recipientId={recipientId}/>
       </div>
     </div>
     </>
