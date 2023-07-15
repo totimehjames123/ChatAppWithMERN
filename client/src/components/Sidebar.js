@@ -6,12 +6,19 @@ import ChatItem from './ChatItem'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSearch } from '@fortawesome/free-solid-svg-icons';
 
-function Sidebar({users, onSelectedUser}) {
+function Sidebar({users, onSelectedUser, getProfilePicture, getUsername}) {
   const [userEmail, setUserEmail] = useState('');
+  const [profilePicture, setProfilePicture] = useState('')
+  const [username, setUsername] = useState('')
 
-  const handleUserSelection = (email) => {
+  const handleUserSelection = (email, profilePicture, username) => {
     setUserEmail(email)
-    onSelectedUser(email)    
+    onSelectedUser(email)  
+    setProfilePicture(profilePicture)
+    getProfilePicture(profilePicture)  
+    setUsername(username)
+    getUsername(username)
+
   }
 
  
@@ -33,16 +40,16 @@ function Sidebar({users, onSelectedUser}) {
 
         <div className='flex items-center justify-center '>
             <div className='bg-white p-5 h-64 overflow-y-scroll' style={{borderRadius: '30px', width: '90%', height: '70vh'}}>
-                <div className='overflow-x-hidden' >
+                <div className='overflow-x-hidden'>
                     {users.map(user => {
                         return (
-                          <div onClick={handleUserSelection.bind(null, user.email)}>
+                          <div onClick={handleUserSelection.bind(null, user.email, user.profilePicture, user.username)}>
                               <ChatItem
                                 key={user._id}
                                 email = {user.email}
                                 username={user.username}
                                 profilePicture= {user.profilePicture}
-                                message= {userEmail}
+                                message= "What's up"
                                 time = "12:34am"
                               />
                           </div>

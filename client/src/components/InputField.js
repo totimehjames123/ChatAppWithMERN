@@ -3,7 +3,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPaperPlane, faSmile, faMicrophone } from '@fortawesome/free-solid-svg-icons';
 import axios from 'axios';
 
-function InputField({senderId, recipientId}) {
+function InputField({senderId, recipientId, recipientProfilePicture, recipientUsername}) {
 
   const [message, setMessage] = useState('');
    
@@ -11,7 +11,7 @@ function InputField({senderId, recipientId}) {
   async function sendTextMessage(e){
     e.preventDefault();
     if (message.trim() === '') {
-      alert (senderId + " " + recipientId)
+      alert (senderId + " " + recipientId + " " + recipientProfilePicture + " " + recipientUsername)
     }
     else {
       try{
@@ -19,9 +19,9 @@ function InputField({senderId, recipientId}) {
           senderEmail: senderId,
           recipientEmail: recipientId,
           senderUsername: sessionStorage.getItem('senderUsername'),
-          recipientUsername: sessionStorage.getItem('recipientUsername'),
+          recipientUsername: recipientUsername,
           senderProfilePicture: sessionStorage.getItem('senderProfilePicture'),
-          recipientProfilePicture: sessionStorage.getItem('recipientProfilePicture'),
+          recipientProfilePicture: recipientProfilePicture,
           message, 
         })
 

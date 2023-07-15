@@ -33,6 +33,7 @@ const newSchema = new mongoose.Schema({
     },
     chatDate: {
        type: Date,
+       default: Date.now
     },
     message: {
         type: String,

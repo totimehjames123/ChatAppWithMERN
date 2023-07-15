@@ -3,7 +3,7 @@ import './../index.css'
 import ChatMessage from '../components/ChatMessage';
 import InputField from '../components/InputField';
 
-function ChatPage({users, messages, senderId, recipientId}) {
+function ChatPage({users, messages, senderId, recipientId, recipientProfilePicture, recipientUsername}) {
 
   return (
     <>
@@ -12,11 +12,11 @@ function ChatPage({users, messages, senderId, recipientId}) {
           <div className='rounded-lg bg-white pl-4 chat-container'>
             {messages.map((msg) => (
                 <ChatMessage
-                  key={msg.id}
+                  key={msg._id}
                   username = {msg.username}
-                  email ={msg.email}
-                  profilePicture={msg.profilePicture}
-                  time={msg.time}
+                  email ={msg.senderEmail}
+                  profilePicture={senderId === msg.senderEmail ? msg.senderProfilePicture : msg.recipientProfilePicture}
+                  time={msg.chatDate}
                   message={msg.message}
                   isSender={senderId === msg.senderEmail ? true : false}
                 /> 
@@ -25,7 +25,7 @@ function ChatPage({users, messages, senderId, recipientId}) {
         </div>
       </div>
       <div className='p-5'>
-        <InputField senderId={senderId} recipientId={recipientId}/>
+        <InputField senderId={senderId} recipientId={recipientId} recipientProfilePicture={recipientProfilePicture} recipientUsername={recipientUsername}/>
       </div>
     </div>
     </>

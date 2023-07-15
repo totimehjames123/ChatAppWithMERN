@@ -11,10 +11,20 @@ function MainPage() {
   const [users, setUsers] = useState([])
   const [selectedEmail, setSelectedEmail] = useState('')
   const [messages, setMessages] = useState([])
+  const [recipientProfilePicture, setRecipientProfilePicture] = useState('')
+  const [username, setUsername] = useState('')
 
   //Update email selections
-  const handleEmailUpdate = (data) => {
-    setSelectedEmail(data)
+  const handleEmailUpdate = (emailData) => {
+    setSelectedEmail(emailData)
+  }
+
+  const handleUsernameUpdate = (usernameData) => {
+    setUsername(usernameData)
+  }
+
+  const handleRecipientProfilePictureUpdate = ( recipientProfilePictureData) => {
+    setRecipientProfilePicture(recipientProfilePictureData)
   }
     
     const longPollingRequest = useCallback(() => {
@@ -73,8 +83,8 @@ function MainPage() {
     <div>
     <h1>{location.state.id}</h1>
       <ChatPageNavBar users = {users}/>
-      <Sidebar users={users} onSelectedUser={handleEmailUpdate}/>
-      <ChatPage users={users} messages={messages} senderId={location.state.id} recipientId={selectedEmail}/>
+      <Sidebar users={users} onSelectedUser={handleEmailUpdate} getProfilePicture={handleRecipientProfilePictureUpdate} getUsername={handleUsernameUpdate}/>
+      <ChatPage users={users} messages={messages} senderId={location.state.id} recipientId={selectedEmail} recipientProfilePicture={recipientProfilePicture} recipientUsername={username}/>
     </div>
   )
 }
