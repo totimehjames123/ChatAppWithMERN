@@ -11,7 +11,6 @@ function InputField({senderId, recipientId, recipientProfilePicture, recipientUs
   async function sendTextMessage(e){
     e.preventDefault();
     if (message.trim() === '') {
-      alert (senderId + " " + recipientId + " " + recipientProfilePicture + " " + recipientUsername)
     }
     else {
       try{
@@ -26,7 +25,7 @@ function InputField({senderId, recipientId, recipientProfilePicture, recipientUs
         })
 
         if (response.data.status === 200){
-          alert("Message sent successfully!")
+          console.log("message sent")
         }
         
       }

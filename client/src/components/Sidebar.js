@@ -11,7 +11,10 @@ function Sidebar({users, onSelectedUser, getProfilePicture, getUsername}) {
   const [profilePicture, setProfilePicture] = useState('')
   const [username, setUsername] = useState('')
 
+  const [isSelected, setIsSelected] = useState(null)
+
   const handleUserSelection = (email, profilePicture, username) => {
+    setIsSelected(true)
     setUserEmail(email)
     onSelectedUser(email)  
     setProfilePicture(profilePicture)
@@ -23,7 +26,7 @@ function Sidebar({users, onSelectedUser, getProfilePicture, getUsername}) {
 
  
   return (
-    <div className='relative side-bar-container bg-gray-100'>
+    <div className='relative side-bar-container bg-gray-50'>
 
         <div className='w-full p-5 flex items-center justify-center' style={{minHeight: '10vh'}}>
         
@@ -43,13 +46,13 @@ function Sidebar({users, onSelectedUser, getProfilePicture, getUsername}) {
                 <div className='overflow-x-hidden'>
                     {users.map(user => {
                         return (
-                          <div onClick={handleUserSelection.bind(null, user.email, user.profilePicture, user.username)}>
+                          <div className={userEmail === user.email ? 'bg-gray-100 rounded': ''} onClick={handleUserSelection.bind(null, user.email, user.profilePicture, user.username)}>
                               <ChatItem
                                 key={user._id}
                                 email = {user.email}
                                 username={user.username}
                                 profilePicture= {user.profilePicture}
-                                message= "What's up"
+                                message= {user.email}
                                 time = "12:34am"
                               />
                           </div>

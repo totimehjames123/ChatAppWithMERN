@@ -132,46 +132,21 @@ app.post("/sendmessage", async (req, res) => {
   
 })
 
-// var senderEmail_ = "";
-// var recipientEmail_ = "";
-
-// app.get("/store", async (req, res) => {
-//   senderEmail = req.query.senderEmail
-//   recipientEmail = req.query.recipientEmail
-  
-//   if (req.session.senderEmail === null || req.session.recipientEmail === ""){
-//     res.send('Data note the session.');
-//   }else{
-//     req.session.senderEmail = senderEmail
-//     req.session.recipientEmail = recipientEmail
-
-//     senderEmail_ = senderEmail
-//     recipientEmail_ = recipientEmail
-
-    
-
-//   }
-  
-
-
-// })
-
-// app.get('/retrieve', (req, res) => {
-//   const value = req.session.senderEmail + " " + req.session.recipientEmail;
-//   res.send(`Retrieved value from session: ${value}`);
-// });
 
 // Define a route for fetching messages based on recipient and sender email
 app.get('/api/messages', async (req, res) => {
   try {
-    const { recipientEmail, senderEmail } = req.query;
+    const { senderEmail, recipientEmail } = req.query;
 
-    console.log(recipientEmail, senderEmail)
+    console.log("mes", senderEmail, recipientEmail)
 
     const messages = await chatsCollection.find({
-      recipientEmail: recipientEmail,
-      senderEmail: senderEmail,
+      $or: [
+        { senderEmail: senderEmail, recipientEmail: recipientEmail },
+        { senderEmail: recipientEmail, recipientEmail: senderEmail }
+      ]
     });
+    
 
     res.status(200).json({ messages });
   } catch (error) {

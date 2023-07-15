@@ -51,8 +51,8 @@ function MainPage() {
     axios
       .get('http://localhost:5000/api/messages', {
         params: {
-          recipientEmail: selectedEmail,
           senderEmail: location.state.id,
+          recipientEmail: selectedEmail,
         },
       })
       .then((response) => {
@@ -81,7 +81,7 @@ function MainPage() {
       
   return (
     <div>
-    <h1>{location.state.id}</h1>
+    {/* <h1>{location.state.id}</h1> */}
       <ChatPageNavBar users = {users}/>
       <Sidebar users={users} onSelectedUser={handleEmailUpdate} getProfilePicture={handleRecipientProfilePictureUpdate} getUsername={handleUsernameUpdate}/>
       <ChatPage users={users} messages={messages} senderId={location.state.id} recipientId={selectedEmail} recipientProfilePicture={recipientProfilePicture} recipientUsername={username}/>

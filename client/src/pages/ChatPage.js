@@ -2,21 +2,25 @@ import React, {useState, useCallback, useEffect} from 'react'
 import './../index.css'
 import ChatMessage from '../components/ChatMessage';
 import InputField from '../components/InputField';
+import { formatDistanceToNow, parseISO } from 'date-fns';
 
-function ChatPage({users, messages, senderId, recipientId, recipientProfilePicture, recipientUsername}) {
+function ChatPage({messages, senderId, recipientId, recipientProfilePicture, recipientUsername}) {
+  const formatDate = (date) => {
+    return formatDistanceToNow(parseISO(date), { addSuffix: true });
+  };
 
   return (
     <>
-    <div className='main-content bg-gray-100 h-screen p-5' >
-      <div className=''>
-          <div className='rounded-lg bg-white pl-4 chat-container'>
+    <div className='main-content bg-gray-50 h-screen p-5 '>
+      <div className=' overflow-hidden justify-between'>
+          <div className='rounded-lg bg-white pl-4 chat-container overflow-scroll'>
             {messages.map((msg) => (
                 <ChatMessage
                   key={msg._id}
-                  username = {msg.username}
-                  email ={msg.senderEmail}
-                  profilePicture={senderId === msg.senderEmail ? msg.senderProfilePicture : msg.recipientProfilePicture}
-                  time={msg.chatDate}
+                  username = {msg.senderUsername}
+                  email ={msg.senderEmail }
+                  profilePicture={msg.senderProfilePicture}
+                  time={formatDate(msg.chatDate)}
                   message={msg.message}
                   isSender={senderId === msg.senderEmail ? true : false}
                 /> 
