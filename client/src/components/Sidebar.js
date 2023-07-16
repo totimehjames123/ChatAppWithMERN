@@ -14,7 +14,6 @@ function Sidebar({ users, onSelectedUser, getProfilePicture, getUsername }) {
   const [searchQuery, setSearchQuery] = useState('');
 
   const handleUserSelection = (email, profilePicture, username) => {
-   
     setUserEmail(email);
     onSelectedUser(email);
     setProfilePicture(profilePicture);
@@ -25,6 +24,10 @@ function Sidebar({ users, onSelectedUser, getProfilePicture, getUsername }) {
 
   const filteredUsers = users.filter((user) =>
     user.username.toLowerCase().includes(searchQuery.toLowerCase())
+  );
+
+  const noSearchFoundMessage = (
+    <div className="text-center p-4 text-gray-500">No users found with the search query: {searchQuery}</div>
   );
 
   return (
@@ -48,8 +51,12 @@ function Sidebar({ users, onSelectedUser, getProfilePicture, getUsername }) {
           style={{ borderRadius: '30px', width: '90%', height: '70vh' }}
         >
           <div className="overflow-x-hidden">
-            {filteredUsers.map((user) => {
-              return (
+            {filteredUsers.length === 0 ? (
+              /* If no users found, display the "No search found" message */
+              noSearchFoundMessage
+            ) : (
+              /* Otherwise, display the list of filtered users */
+              filteredUsers.map((user) => (
                 <div
                   key={user._id}
                   className={userEmail === user.email ? 'bg-gray-100 rounded' : ''}
@@ -65,8 +72,8 @@ function Sidebar({ users, onSelectedUser, getProfilePicture, getUsername }) {
                     time="12:34am"
                   />
                 </div>
-              );
-            })}
+              ))
+            )}
           </div>
         </div>
       </div>
