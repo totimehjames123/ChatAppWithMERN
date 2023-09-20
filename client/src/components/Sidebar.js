@@ -64,6 +64,10 @@ function Sidebar({ users, onSelectedUser, getProfilePicture, getUsername }) {
                     handleUserSelection(user.email, user.profilePicture, user.username)
                   }
                 >
+                
+                  {sessionStorage.getItem("senderEmail") === user.email ?
+                  ""
+                  : 
                   <ChatItem
                     email={user.email}
                     username={user.username}
@@ -71,6 +75,8 @@ function Sidebar({ users, onSelectedUser, getProfilePicture, getUsername }) {
                     message={user.email}
                     time="12:34am"
                   />
+                  }
+                  
                 </div>
               ))
             )}

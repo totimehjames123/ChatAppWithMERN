@@ -15,6 +15,8 @@ function ChatPage({messages, senderId, recipientId, recipientProfilePicture, rec
       <div className=' overflow-hidden justify-between'>
           <div className='rounded-lg bg-white pl-4 chat-container overflow-scroll'>
             {messages.map((msg) => (
+              recipientId == "" || recipientId == null ? 
+              "":
               <ChatMessage
                 key={msg._id}
                 username = {msg.senderUsername}
@@ -25,10 +27,22 @@ function ChatPage({messages, senderId, recipientId, recipientProfilePicture, rec
                 isSender={senderId === msg.senderEmail ? true : false}
               /> 
             ))}
+            {recipientId == "" || recipientId == null ? 
+            <div className='text-center pt-24 text-[22px]'>
+              <b>👈👈👈👈👈</b><br />
+              Click on any user from the side bar and start chatting
+            </div>
+             : ""}
         </div>
       </div>
       <div className='p-5'>
-        <InputField senderId={senderId} recipientId={recipientId} recipientProfilePicture={recipientProfilePicture} recipientUsername={recipientUsername}/>
+        {recipientId == "" || recipientId == null ? 
+        <div className='w-100 bg-white text-center rounded-[20px] p-4'>
+          <b>NO USER SELECTED</b>
+        </div>
+        :
+          <InputField senderId={senderId} recipientId={recipientId} recipientProfilePicture={recipientProfilePicture} recipientUsername={recipientUsername}/>
+        }
       </div>
     </div>
     </>

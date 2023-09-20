@@ -10,7 +10,9 @@ function InputField({senderId, recipientId, recipientProfilePicture, recipientUs
 
   async function sendTextMessage(e){
     e.preventDefault();
+    setMessage('')
     if (message.trim() === '') {
+      
     }
     else {
       try{
@@ -25,6 +27,7 @@ function InputField({senderId, recipientId, recipientProfilePicture, recipientUs
         })
 
         if (response.data.status === 200){
+          
           console.log("message sent")
         }
         
@@ -47,6 +50,7 @@ function InputField({senderId, recipientId, recipientProfilePicture, recipientUs
           placeholder="Type your message..."
           className="flex-grow outline-none focus:outline-none"
           onChange={(e) => setMessage(e.target.value)}
+          value={message}
         />
         <button className="mx-2" style={{visibility: message.trim(senderId) !== '' ? 'hidden' : 'visible'}}>
           <FontAwesomeIcon icon={faMicrophone} className="text-green-500" />

@@ -26,7 +26,7 @@ function LoginPage() {
                     sessionStorage.setItem("senderProfilePicture", res.data.data.profilePicture)
                     sessionStorage.setItem("senderGender", res.data.data.gender)
                     
-                    location("/mainpage", { state: { id: email }})
+                    location("/mainpage")
                 }
                 else if (res.data === "notexist"){
                     alert("doesn't exist")

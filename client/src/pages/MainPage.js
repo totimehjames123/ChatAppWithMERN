@@ -3,10 +3,16 @@ import Sidebar from '../components/Sidebar'
 import ChatPage from './ChatPage'
 import ChatPageNavBar from '../components/ChatPageNavBar'
 import axios from 'axios'
-import { useLocation } from 'react-router-dom'
+import {useNavigate } from 'react-router-dom'
 
 function MainPage() {
-  const location = useLocation()
+  const navigater = useNavigate()
+ 
+    const senderEmail = sessionStorage.getItem("senderEmail");
+    if (senderEmail === null || senderEmail === "") {
+      navigater("/login");
+    }
+
 
   const [users, setUsers] = useState([])
   const [selectedEmail, setSelectedEmail] = useState('')
@@ -51,7 +57,7 @@ function MainPage() {
     axios
       .get('http://localhost:5000/api/messages', {
         params: {
-          senderEmail: location.state.id,
+          senderEmail: sessionStorage.getItem("senderEmail"),
           recipientEmail: selectedEmail,
         },
       })
@@ -74,17 +80,16 @@ function MainPage() {
     return () => {
       clearInterval(interval);
     };
-  }, [selectedEmail, location.state.id]);
+  }, [selectedEmail, sessionStorage.getItem("senderEmail")]);
 
     
 
       
   return (
     <div>
-    {/* <h1>{location.state.id}</h1> */}
       <ChatPageNavBar users = {users}/>
       <Sidebar users={users} onSelectedUser={handleEmailUpdate} getProfilePicture={handleRecipientProfilePictureUpdate} getUsername={handleUsernameUpdate}/>
-      <ChatPage users={users} messages={messages} senderId={location.state.id} recipientId={selectedEmail} recipientProfilePicture={recipientProfilePicture} recipientUsername={username}/>
+      <ChatPage users={users} messages={messages} senderId={sessionStorage.getItem("senderEmail")} recipientId={selectedEmail} recipientProfilePicture={recipientProfilePicture} recipientUsername={username}/>
     </div>
   )
 }
