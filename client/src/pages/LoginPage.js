@@ -8,7 +8,8 @@ function LoginPage() {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
 
-    const [userInfo, setUserInfo] = useState([]);
+    const [loginError, setLoginError] = useState('');
+    const [loginSuccess, setLoginSuccess] = useState('');
     
     async function submit(e){
         e.preventDefault()
@@ -29,7 +30,7 @@ function LoginPage() {
                     location("/mainpage")
                 }
                 else if (res.data === "notexist"){
-                    alert("doesn't exist")
+                    setLoginError('Invalid email or password!');
                 }
             })
             .catch (e => {
@@ -37,7 +38,7 @@ function LoginPage() {
             })
         }
         catch{
-            console.log("Getting an error")
+            setLoginError("An error occured! Please try again")
         }
   }
  
@@ -48,7 +49,11 @@ function LoginPage() {
             <img src='logo.jpeg' alt='My Logo' width={100} height={100}/>
         </div>
         <h2 className="text-2xl font-bold text-center mb-6">Login</h2>
-        
+
+        {loginError !=='' && 
+          <div className='text-red-600 p-2 bg-red-200 mb-2 text-center font-bold rounded'>{loginError}</div>
+        }
+
         <form action='POST'>
           <div className="mb-4">
             <label htmlFor="email" className="block mb-2 text-sm font-medium text-gray-700">Email</label>

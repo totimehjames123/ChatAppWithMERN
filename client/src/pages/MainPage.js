@@ -75,15 +75,12 @@ function MainPage() {
 
     const interval = setInterval(() => {
       fetchMessages();
-    }, 5000); // Fetch messages every 5 seconds
+    }, 5000);
 
     return () => {
       clearInterval(interval);
     };
   }, [selectedEmail, sessionStorage.getItem("senderEmail")]);
-
-    
-
       
   return (
     <div>

@@ -1,7 +1,7 @@
 import React, {useState, useEffect} from 'react';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
-import validator from 'validator'
+import validator from 'validator';
 import { useNavigate } from 'react-router-dom';
 
 function SignupPage() {
@@ -9,38 +9,37 @@ function SignupPage() {
     const [isMobile, setIsMobile] = useState(false);
 
     //Setting an error message
-    const [errorMessage, setErrorMessage] = useState("")
+    const [signupMessage, setSignupMessage] = useState("")
 
     const messageToDisplay = (message) => {
-        setErrorMessage(message)
+        setSignupMessage(message)
     }
-
 
     useEffect(() => {
         const handleResize = () => {
-        setIsMobile(window.innerWidth < 500); // Adjust the breakpoint as per your requirements
+        setIsMobile(window.innerWidth < 500);
         };
 
-        handleResize(); // Call the function initially
+        handleResize();
 
-        window.addEventListener('resize', handleResize); // Add event listener to handle resize
+        window.addEventListener('resize', handleResize);
 
         return () => {
-        window.removeEventListener('resize', handleResize); // Clean up the event listener
+        window.removeEventListener('resize', handleResize);
         };
     }, []);
 
     //Store login credentials
 
-    const [username, setUsername] = useState("")
-    const [email, setEmail] = useState("")
+    const [username, setUsername] = useState("");
+    const [email, setEmail] = useState("");
     const [profilePicture, setProfilePicture] = useState(null)
     const [gender, setGender] = useState('');
     const [countries, setCountries] = useState([]);
     const [selectedCountry, setSelectedCountry] = useState('');
 
-    const [newPassword, setNewPassword] = useState('')
-    const [confirmPassword, setConfirmPassword] = useState('')
+    const [newPassword, setNewPassword] = useState('');
+    const [confirmPassword, setConfirmPassword] = useState('');
 
     const password = (newPassword === confirmPassword) ? newPassword : null
 
@@ -78,7 +77,6 @@ function SignupPage() {
     async function submit(e) {
         e.preventDefault();
         if (username !== ""){
-            messageToDisplay("username good")
             if (email !== ""){
                 //Set validation for email
                 validateEmail()
@@ -86,25 +84,25 @@ function SignupPage() {
                     messageToDisplay("Email is valid")
     
                     if (profilePicture !== null){
-                        messageToDisplay("profile good")
+                        messageToDisplay("Profile Picture is set!")
                         
                         if (gender !== ""){
-                            messageToDisplay("gender good")
+                            messageToDisplay("Gender is set!")
                             
                             if (selectedCountry !== ""){
-                                messageToDisplay("country good")
+                                messageToDisplay("Country is set!")
     
                                 //passwords
                                 if (newPassword !== ""){
-                                    messageToDisplay("Passwords entered")
+                                    messageToDisplay("New password is set!")
                                     
                                     if (confirmPassword !== ""){
-                                        messageToDisplay("confam pass enter")
+                                        messageToDisplay("Confirm password is set!")
 
                                         if (newPassword.length >= 6){
-                                            messageToDisplay("new pass good")
+                                            messageToDisplay("Password is set!")
                                             if (confirmPassword.length >= 6){
-                                                messageToDisplay("con pass good")
+                                                messageToDisplay("Confirm password is set!")
 
                                                 if (password !== null) {
                                                     try {
@@ -121,7 +119,8 @@ function SignupPage() {
                                                         messageToDisplay("User already exists")
                                                       } else if (response.data === 'notexist') {
                                                         messageToDisplay("Account created successfully")
-                                                        location('/mainpage', { state: { id: email } });
+                                                        alert("Account created successfully")
+                                                        location('/login');
                                                       }
                                                     } catch {
                                                       messageToDisplay("An error occured!")
@@ -133,11 +132,11 @@ function SignupPage() {
                                          
                                             }
                                             else{
-                                                messageToDisplay("con password length should be >= 6")
+                                                messageToDisplay("Confirm password length should be >= 6")
                                             }
                                         }
                                         else{
-                                            messageToDisplay("new Password length should be >= 6")
+                                            messageToDisplay("New Password length should be >= 6")
                                         }
                 
                                     }
@@ -151,15 +150,15 @@ function SignupPage() {
                                 
                             }
                             else{
-                                messageToDisplay("country required")
+                                messageToDisplay("Country field is required!")
                             }
                         }
                         else{
-                            messageToDisplay("gender required")
+                            messageToDisplay("Gender field is required!")
                         }
                     }
                     else{
-                        messageToDisplay("Profile picture is required")
+                        messageToDisplay("Profile picture field is required")
                     }
                     
                 }
@@ -168,12 +167,12 @@ function SignupPage() {
                 }
             }
             else{
-                messageToDisplay("Email failed is required!")
+                messageToDisplay("Email field is required!")
             }
 
         }
         else {
-            messageToDisplay("Username required")
+            messageToDisplay("Username field is required")
         }
         
         
@@ -186,7 +185,12 @@ function SignupPage() {
             <img src="logo.jpeg" alt="Logo" width={100} height={100} />
             </div>
             <h2 className="text-2xl font-bold text-center mb-6">Sign Up</h2>
-            <small>{errorMessage}</small>
+            {signupMessage !== "" && 
+                <div className='bg-red-100 text-red-500 mb-3 rounded text-center font-bold p-3'>
+                    <small>{signupMessage}</small>
+                </div>
+            }
+            
             <form>
             <div className="mb-4">
                 <label htmlFor="username" className="block mb-2 text-sm font-medium text-gray-700">

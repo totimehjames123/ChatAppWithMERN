@@ -9,7 +9,7 @@ import { faSearch } from '@fortawesome/free-solid-svg-icons';
 function Sidebar({ users, onSelectedUser, getProfilePicture, getUsername }) {
   const [userEmail, setUserEmail] = useState('');
   const [profilePicture, setProfilePicture] = useState('');
-  const [username, setUsername] = useState('');
+  const [username, setUsername] = useState('');  
 
   const [searchQuery, setSearchQuery] = useState('');
 
@@ -37,7 +37,7 @@ function Sidebar({ users, onSelectedUser, getProfilePicture, getUsername }) {
           <input
             type="text"
             placeholder="Search"
-            className="py-3 pl-11 pr-4 rounded-full focus:outline-none focus:ring-none w-full"
+            className="py-3 pl-11 pr-4 rounded-[8px] focus:outline-none focus:ring-none w-full"
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
           />
@@ -45,10 +45,10 @@ function Sidebar({ users, onSelectedUser, getProfilePicture, getUsername }) {
         </div>
       </div>
 
-      <div className="flex items-center justify-center ">
+      <div className="flex items-center justify-center">
         <div
-          className="bg-white p-5 h-64 overflow-y-scroll"
-          style={{ borderRadius: '30px', width: '90%', height: '70vh' }}
+          className="bg-white p-5 h-64 overflow-y-scroll rounded-[8px]"
+          style={{width: '90%', height: '70vh' }}
         >
           <div className="overflow-x-hidden">
             {filteredUsers.length === 0 ? (

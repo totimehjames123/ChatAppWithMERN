@@ -11,7 +11,7 @@ function ChatPage({messages, senderId, recipientId, recipientProfilePicture, rec
 
   return (
     <>
-    <div className='main-content bg-gray-50 h-screen p-5 '>
+    <div className='main-content bg-gray-50 h-screen pl-0 p-5  '>
       <div className=' overflow-hidden justify-between'>
           <div className='rounded-lg bg-white pl-4 chat-container overflow-scroll'>
             {messages.map((msg) => (

@@ -4,9 +4,8 @@ const cors = require("cors");
 const multer = require('multer');
 
 const collection = require("./mongo");
-const login = require("./login");
 const path = require('path');
-const chatsCollection = require("./chats"); 
+const chatsCollection = require("./chats");
 const app = express();
 
 app.use(express.json());
@@ -91,7 +90,6 @@ app.post("/signup", upload.single('profilePicture'), async (req, res) => {
 //Fetching users
 app.get("/users", async (req, res) => {
   try{
-    
     const users = await collection.find({});
     res.send({status: 'ok', data: users})
   }
@@ -138,7 +136,7 @@ app.get('/api/messages', async (req, res) => {
   try {
     const { senderEmail, recipientEmail } = req.query;
 
-    console.log("mes", senderEmail, recipientEmail)
+    console.log("messages: ", senderEmail, recipientEmail)
 
     const messages = await chatsCollection.find({
       $or: [
