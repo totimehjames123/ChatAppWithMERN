@@ -9,7 +9,6 @@ function LoginPage() {
     const [password, setPassword] = useState('');
 
     const [loginError, setLoginError] = useState('');
-    const [loginSuccess, setLoginSuccess] = useState('');
     
     async function submit(e){
         e.preventDefault()

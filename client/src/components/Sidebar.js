@@ -11,6 +11,8 @@ function Sidebar({ users, onSelectedUser, getProfilePicture, getUsername }) {
   const [profilePicture, setProfilePicture] = useState('');
   const [username, setUsername] = useState('');  
 
+  console.log(username, profilePicture)
+
   const [searchQuery, setSearchQuery] = useState('');
 
   const handleUserSelection = (email, profilePicture, username) => {

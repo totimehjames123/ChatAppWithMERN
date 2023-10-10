@@ -20,6 +20,7 @@ function MainPage() {
   const [recipientProfilePicture, setRecipientProfilePicture] = useState('')
   const [username, setUsername] = useState('')
 
+
   //Update email selections
   const handleEmailUpdate = (emailData) => {
     setSelectedEmail(emailData)
@@ -52,35 +53,35 @@ function MainPage() {
         longPollingRequest(); 
     }, [longPollingRequest]);
 
-
-    function fetchMessages() {
-    axios
-      .get('http://localhost:5000/api/messages', {
-        params: {
-          senderEmail: sessionStorage.getItem("senderEmail"),
-          recipientEmail: selectedEmail,
-        },
-      })
-      .then((response) => {
-        setMessages(response.data.messages);
-        console.log(messages);
-      })
-      .catch((error) => {
-        console.error('Error fetching messages:', error);
-      });
-  }
-
-  useEffect(() => {
-    fetchMessages();
-
-    const interval = setInterval(() => {
-      fetchMessages();
-    }, 5000);
-
-    return () => {
-      clearInterval(interval);
-    };
-  }, [selectedEmail, sessionStorage.getItem("senderEmail")]);
+    useEffect(() => {
+      function fetchMessages() {
+        axios
+          .get('http://localhost:5000/api/messages', {
+            params: {
+              senderEmail: sessionStorage.getItem("senderEmail"),
+              recipientEmail: selectedEmail,
+            },
+          })
+          .then((response) => {
+            setMessages(response.data.messages);
+            console.log(messages);
+          })
+          .catch((error) => {
+            console.error('Error fetching messages:', error);
+          });
+      }
+    
+      fetchMessages(); // Call the function
+    
+      const interval = setInterval(() => {
+        fetchMessages();
+      }, 5000);
+    
+      return () => {
+        clearInterval(interval);
+      };
+    }, [selectedEmail, senderEmail, messages]);
+    
       
   return (
     <div>

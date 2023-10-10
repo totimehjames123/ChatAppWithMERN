@@ -1,4 +1,3 @@
-import React, {useState, useCallback, useEffect} from 'react'
 import './../index.css';
 import ChatMessage from '../components/ChatMessage';
 import InputField from '../components/InputField';
@@ -15,7 +14,7 @@ function ChatPage({messages, senderId, recipientId, recipientProfilePicture, rec
       <div className=' overflow-hidden justify-between'>
           <div className='rounded-lg bg-white pl-4 chat-container overflow-scroll'>
             {messages.map((msg) => (
-              recipientId == "" || recipientId == null ? 
+              recipientId === "" || recipientId === null ? 
               "":
               <ChatMessage
                 key={msg._id}
@@ -27,7 +26,7 @@ function ChatPage({messages, senderId, recipientId, recipientProfilePicture, rec
                 isSender={senderId === msg.senderEmail ? true : false}
               /> 
             ))}
-            {recipientId == "" || recipientId == null ? 
+            {recipientId === "" || recipientId === null ? 
             <div className='text-center pt-24 text-[22px]'>
               <b>👈👈👈👈👈</b><br />
               Click on any user from the side bar and start chatting
@@ -36,7 +35,7 @@ function ChatPage({messages, senderId, recipientId, recipientProfilePicture, rec
         </div>
       </div>
       <div className='p-5'>
-        {recipientId == "" || recipientId == null ? 
+        {recipientId === "" || recipientId == null ? 
         <div className='w-100 bg-white text-center rounded-[20px] p-4'>
           <b>NO USER SELECTED</b>
         </div>
