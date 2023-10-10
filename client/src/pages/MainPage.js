@@ -35,7 +35,7 @@ function MainPage() {
   }
     
     const longPollingRequest = useCallback(() => {
-      fetch("http://localhost:5000/users")
+      fetch("https://mernstack-chat-app-backend.onrender.com/users")
         .then((response) => response.json())
         .then((data) => {
           if (data.data) {
@@ -56,7 +56,7 @@ function MainPage() {
     useEffect(() => {
       function fetchMessages() {
         axios
-          .get('http://localhost:5000/api/messages', {
+          .get('https://mernstack-chat-app-backend.onrender.com/messages', {
             params: {
               senderEmail: sessionStorage.getItem("senderEmail"),
               recipientEmail: selectedEmail,

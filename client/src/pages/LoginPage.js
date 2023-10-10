@@ -14,7 +14,7 @@ function LoginPage() {
         e.preventDefault()
 
         try{
-            await axios.post('http://localhost:5000/login', {
+            await axios.post('https://mernstack-chat-app-backend.onrender.com/login', {
                 email, password
             }).then (res => {
                 if (res.data.status === "ok"){

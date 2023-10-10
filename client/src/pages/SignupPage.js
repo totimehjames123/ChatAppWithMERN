@@ -114,7 +114,7 @@ function SignupPage() {
                                                       formData.append('selectedCountry', selectedCountry);
                                                       formData.append('password', password);
                                                 
-                                                      const response = await axios.post('http://localhost:5000/signup', formData);
+                                                      const response = await axios.post('https://mernstack-chat-app-backend.onrender.com/signup', formData);
                                                       if (response.data === 'exist') {
                                                         messageToDisplay("User already exists")
                                                       } else if (response.data === 'notexist') {

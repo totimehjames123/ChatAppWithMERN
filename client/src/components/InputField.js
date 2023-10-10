@@ -16,7 +16,7 @@ function InputField({senderId, recipientId, recipientProfilePicture, recipientUs
     }
     else {
       try{
-        const response = await axios.post('http://localhost:5000/sendmessage', {
+        const response = await axios.post('https://mernstack-chat-app-backend.onrender.com/sendmessage', {
           senderEmail: senderId,
           recipientEmail: recipientId,
           senderUsername: sessionStorage.getItem('senderUsername'),
