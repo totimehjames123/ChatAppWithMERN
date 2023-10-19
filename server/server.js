@@ -116,7 +116,7 @@ app.post("/sendmessage", async (req, res) => {
   }
 
   catch (err) {
-    console.log(err," an error occurred")
+    console.log(err," an error occurred while tryna send message")
   }
   
 })
