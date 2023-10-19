@@ -34,10 +34,12 @@ function LoginPage() {
             })
             .catch (e => {
                 alert (e)
+                console.log(e)
             })
         }
-        catch{
+        catch(error){
             setLoginError("An error occured! Please try again")
+            console.log(error)
         }
   }
  

@@ -6,6 +6,6 @@ module.exports = mongoose.connect("mongodb://totimehjames123:Laos54Z3qZ3WUqA9@ac
   })
   .catch((err) => {
     console.log("failed!", err.message);
-  }); 
+}); 
 
 //Laos54Z3qZ3WUqA9
