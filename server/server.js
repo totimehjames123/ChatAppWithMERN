@@ -1,5 +1,4 @@
 const express = require("express");
-const session = require("express-session");
 const cors = require("cors");
 const multer = require('multer');
 
@@ -14,14 +13,6 @@ app.use(cors());
 
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
-app.use(
-  session({
-    secret: 'your-secret-key',
-    resave: false,
-    saveUninitialized: true,
-    // cookie: { secure: false }, // Adjust options as needed
-  })
-);
 
 // Configure multer for file upload
 const storage = multer.diskStorage({
