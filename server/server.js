@@ -10,14 +10,14 @@ const app = express();
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-const corsOptions = {
-  origin: 'https://mernstack-chat-app.netlify.app',
-  credentials: true,
-};
+// const corsOptions = {
+//   origin: 'https://mernstack-chat-app.netlify.app',
+//   credentials: true,
+// };
 
-app.use(cors(corsOptions));
+// app.use(cors(corsOptions));
 
-// app.use(cors());
+app.use(cors());
 
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
