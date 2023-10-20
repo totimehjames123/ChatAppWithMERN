@@ -131,7 +131,7 @@ app.post("/sendmessage", async (req, res) => {
 
 
 // Define a route for fetching messages based on recipient and sender email
-app.get('/api/messages', async (req, res) => {
+app.get('/messages', async (req, res) => {
   try {
     const { senderEmail, recipientEmail } = req.query;
 
