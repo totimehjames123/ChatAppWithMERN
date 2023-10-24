@@ -18,3 +18,4 @@ const ChatMessage = ({username, email, profilePicture, time, message, isSender }
 };
 
 export default ChatMessage;
+console.lokcon;

@@ -75,7 +75,7 @@ function MainPage() {
     
       const interval = setInterval(() => {
         fetchMessages();
-      }, 1000);
+      }, 5000);
     
       return () => {
         clearInterval(interval);
